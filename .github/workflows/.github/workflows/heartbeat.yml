@@ -1,4 +1,4 @@
-name: Heartbeat
+name: Heartbeat Both Spaces
 
 on:
   schedule:
@@ -6,14 +6,34 @@ on:
   workflow_dispatch:
 
 jobs:
-  ping:
+  ping-fullmax:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - uses: browser-actions/setup-chrome@v1
-      
-      - name: Visit Space
+      - name: Visit FullMax Space
+        run: |
+          pip install selenium
+          python -c "
+          from selenium import webdriver
+          from selenium.webdriver.chrome.options import Options
+          import time
+          options = Options()
+          options.add_argument('--headless')
+          options.add_argument('--no-sandbox')
+          driver = webdriver.Chrome(options=options)
+          driver.get('https://reoo88-fullmax.hf.space')
+          time.sleep(10)
+          print('FullMax:', driver.title)
+          driver.quit()
+          "
+
+  ping-b6rn:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: browser-actions/setup-chrome@v1
+      - name: Visit B6rn Space
         run: |
           pip install selenium
           python -c "
@@ -26,6 +46,6 @@ jobs:
           driver = webdriver.Chrome(options=options)
           driver.get('https://reoo88-b6rn.hf.space')
           time.sleep(10)
-          print(driver.title)
+          print('B6rn:', driver.title)
           driver.quit()
           "
